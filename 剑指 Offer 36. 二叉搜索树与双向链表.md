@@ -74,7 +74,7 @@ var treeToDoublyList = function(root) {
     return;
   }
 
-  const lastNode = convert2(root);
+  const lastNode = convert(root);
 
   let firstNode = lastNode;
 
@@ -88,7 +88,7 @@ var treeToDoublyList = function(root) {
   return firstNode;
 };
 
-function convert2(root) {
+function convert(root) {
   if (!root) {
     return;
   }
