@@ -53,3 +53,68 @@ function convert(root, lastNodeRef) {
   convert(root.right, lastNodeRef);
 }
 ```
+
+遍历
+
+```js
+/**
+ * // Definition for a Node.
+ * function Node(val,left,right) {
+ *    this.val = val;
+ *    this.left = left;
+ *    this.right = right;
+ * };
+ */
+/**
+ * @param {Node} root
+ * @return {Node}
+ */
+var treeToDoublyList = function(root) {
+  if (!root) {
+    return;
+  }
+
+  const lastNode = convert2(root);
+
+  let firstNode = lastNode;
+
+  while (firstNode.left) {
+    firstNode = firstNode.left;
+  }
+
+  firstNode.left = lastNode;
+  lastNode.right = firstNode;
+
+  return firstNode;
+};
+
+function convert2(root) {
+  if (!root) {
+    return;
+  }
+
+  let current = root;
+  const stack = [];
+  let lastNode = null;
+
+  while (current || stack.length > 0) {
+    while (current) {
+      stack.push(current);
+      current = current.left;
+    }
+
+    current = stack.pop();
+
+    if (lastNode) {
+      lastNode.right = current;
+      current.left = lastNode;
+    }
+
+    lastNode = current;
+
+    current = current.right;
+  }
+
+  return lastNode;
+}
+```
