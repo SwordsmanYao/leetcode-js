@@ -1,0 +1,55 @@
+https://leetcode-cn.com/problems/er-cha-sou-suo-shu-yu-shuang-xiang-lian-biao-lcof/
+
+## 递归
+
+```js
+/**
+ * // Definition for a Node.
+ * function Node(val,left,right) {
+ *    this.val = val;
+ *    this.left = left;
+ *    this.right = right;
+ * };
+ */
+/**
+ * @param {Node} root
+ * @return {Node}
+ */
+var treeToDoublyList = function(root) {
+  if (!root) {
+    return;
+  }
+
+  const lastNodeRef = {
+    current: null,
+  };
+  convert(root, lastNodeRef);
+
+  let firstNode = lastNodeRef.current;
+
+  while(firstNode.left) {
+    firstNode = firstNode.left;
+  }
+
+  firstNode.left = lastNodeRef.current;
+  lastNodeRef.current.right = firstNode;
+
+  return firstNode;
+};
+
+function convert(root, lastNodeRef) {
+  if (!root) {
+    return;
+  }
+
+  convert(root.left, lastNodeRef);
+
+  if (lastNodeRef.current) {
+    lastNodeRef.current.right = root;
+    root.left = lastNodeRef.current;
+  }
+  lastNodeRef.current = root;
+
+  convert(root.right, lastNodeRef);
+}
+```
